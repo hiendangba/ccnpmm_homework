@@ -79,8 +79,26 @@ const getUserService = async () => {
     }
 }
 
+const forgotPWService = async (email, password) => {
+    try {
+                console.log(">>> check user: ", email);
+        const user = await User.findOne({ email });
+        if (!user) throw new Error("không tìm thấy user"); // không tìm thấy user
+        // Hash password mới trước khi lưu
+        user.password = await bcrypt.hash(password, saltRounds);
+        await user.save();
+
+        const { password: pw, ...rest } = user.toObject();
+        return rest;
+    } catch (error) {
+        console.log(error);
+        throw new Error(error);
+    }
+}
+
 module.exports = {
     createUserService,
     loginService,
-    getUserService
+    getUserService,
+    forgotPWService
 }

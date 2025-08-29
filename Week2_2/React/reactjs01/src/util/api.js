@@ -8,6 +8,12 @@ const createUserApi = (name, email, password) => {
   return axios.post(URL_API, data);
 };
 
+const forgotPasswordApi = (email) => {
+  const URL_API = "/v1/api/forgot-password";
+  const data = { email, newpassword};
+  return axios.post(URL_API, data);
+}
+
 const loginApi = (email, password) => {
   const URL_API = "/v1/api/login";
   const data = {
